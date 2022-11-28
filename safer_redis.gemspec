@@ -26,4 +26,6 @@ Gem::Specification.new do |spec|
     end
   end
   spec.require_paths = ["lib"]
+
+  spec.add_dependency "zeitwerk"
 end

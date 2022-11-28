@@ -1,0 +1,36 @@
+PATH
+  remote: .
+  specs:
+    safer_redis (0.1.0)
+      zeitwerk
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    diff-lcs (1.5.0)
+    rake (13.0.6)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.0)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.0)
+    zeitwerk (2.6.6)
+
+PLATFORMS
+  x86_64-darwin-21
+
+DEPENDENCIES
+  rake (~> 13.0)
+  rspec (~> 3.0)
+  safer_redis!
+
+BUNDLED WITH
+   2.3.19
