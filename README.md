@@ -1,8 +1,8 @@
 # SaferRedis
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/safer_redis`. To experiment with that code, run `bin/console` for an interactive prompt.
+SaferRedis wraps a Redis connection, and warns you before letting through commands that could impact production availability by being marked `@slow` or `@dangerous` in the Redis documentation. It's intended to be activated in production `rails console` sessions, and perhaps one-off scripts or Rake tasks, but not for handling production workload.
 
-TODO: Delete this and the text above, and describe your gem
+Inspiration is taken from https://github.com/ankane/strong_migrations which provides similar guard-rails for potentially dangerous database migrations.
 
 ## Installation
 
@@ -16,7 +16,29 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# WIP: stay tuned for a nice way to activate it
+Redis.prepend(SaferRedis::Shim)
+
+redis = Redis.new
+
+redis.del("very-large-collection")
+
+# SaferRedis::Danger: This Redis command might be dangerous:
+#
+#   DEL very-large-collection
+#
+# If you're sure, try:
+#
+#   SaferRedis.really do
+#     # your Redis call here
+#   end
+#
+# from …/safer_redis.rb:43:in `assess'
+
+SaferRedis.really { r.del("hello") }
+# => 1
+```
 
 ## Development
 
@@ -26,7 +48,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/safer_redis. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/safer_redis/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/buildkite/safer_redis. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/safer_redis/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 

@@ -2,8 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in safer_redis.gemspec
-gemspec
+gemspec # see safer_redis.gemspec
 
 gem "rake", "~> 13.0"
 
