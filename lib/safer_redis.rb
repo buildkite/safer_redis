@@ -6,6 +6,10 @@ Zeitwerk::Loader.for_gem.setup
 module SaferRedis
   class Error < StandardError; end
 
+  def self.activate!
+    Redis.prepend(SaferRedis::Interceptor)
+  end
+
   def self.really
     was = defined?(@really) ? @really : false
     @really = true
