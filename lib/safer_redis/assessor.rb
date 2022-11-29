@@ -4,7 +4,6 @@ require "json"
 
 module SaferRedis
   class Assessor
-    DATA_PATH = "data/redis-doc/commands.json"
     def self.assess(command)
       info = command_info(command)
 
@@ -25,7 +24,12 @@ module SaferRedis
     end
 
     def self.command_info(command)
-      @data ||= JSON.parse(File.read(DATA_PATH))
+      # is there a better way to get the gem's base dir?
+      gem_dir = Gem::Specification.find_by_name("safer_redis").gem_dir
+
+      path = File.join(gem_dir, "data", "redis-doc", "commands.json")
+
+      @data ||= JSON.parse(File.read(path))
 
       @data[command.name] || {}
     end
