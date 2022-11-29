@@ -8,6 +8,8 @@ RSpec.describe SaferRedis::Assessor do
       }.to raise_error(SaferRedis::Danger, <<~MESSAGE)
         The DEL Redis command might be dangerous.
 
+        https://redis.io/commands/del/
+
         ACL categories: @keyspace @write @slow
 
         Complexity: O(N) where N is the number of keys that will be removed. When a key to remove holds a value other than a string, the individual complexity for this key is O(M) where M is the number of elements in the list, set, sorted set or hash. Removing a single key that holds a string value is O(1).

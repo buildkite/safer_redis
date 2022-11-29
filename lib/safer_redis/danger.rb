@@ -6,6 +6,8 @@ module SaferRedis
       message = <<~MESSAGE
         The #{command.name} Redis command might be dangerous.
 
+        #{command.url}
+
         ACL categories: #{assessment.categories.join(" ")}
 
         Complexity: #{assessment.complexity}
