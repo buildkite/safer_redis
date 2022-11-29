@@ -17,26 +17,23 @@ If bundler is not being used to manage dependencies, install the gem by executin
 ## Usage
 
 ```ruby
-# WIP: stay tuned for a nice way to activate it
-Redis.prepend(SaferRedis::Shim)
+Redis.prepend(SaferRedis::Interceptor)
 
 redis = Redis.new
 
 redis.del("very-large-collection")
 
-# SaferRedis::Danger: This Redis command might be dangerous:
+# SaferRedis::Danger: The DEL Redis command might be dangerous.
 #
-#   DEL very-large-collection
+# https://redis.io/commands/del/
 #
-# If you're sure, try:
+# ACL categories: @keyspace @write @slow
 #
-#   SaferRedis.really do
-#     # your Redis call here
-#   end
+# Complexity: O(N) where N is the number of keys that will be removed. When a key to remove holds a value other than a string, the individual complexity for this key is O(M) where M is the number of elements in the list, set, sorted set or hash. Removing a single key that holds a string value is O(1).
 #
-# from …/safer_redis.rb:43:in `assess'
+# If you're sure this is okay, you can try again within `SaferRedis.really { ... }`
 
-SaferRedis.really { r.del("hello") }
+SaferRedis.really { redis.del("hello") }
 # => 1
 ```
 

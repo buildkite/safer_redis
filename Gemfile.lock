@@ -2,13 +2,19 @@ PATH
   remote: .
   specs:
     safer_redis (0.1.0)
+      redis (>= 4.6.0)
       zeitwerk
 
 GEM
   remote: https://rubygems.org/
   specs:
+    connection_pool (2.3.0)
     diff-lcs (1.5.0)
     rake (13.0.6)
+    redis (5.0.5)
+      redis-client (>= 0.9.0)
+    redis-client (0.11.2)
+      connection_pool
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
       rspec-expectations (~> 3.12.0)

@@ -27,5 +27,9 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
+  # The only strategy implemented so far is intercepting the private Redis#send_command method,
+  # which was introduced in v4.6.0 via https://github.com/redis/redis-rb/pull/1058 and remains
+  # in the latest release (v5.0.5) at time of writing.
+  spec.add_dependency "redis", ">= 4.6.0"
   spec.add_dependency "zeitwerk"
 end

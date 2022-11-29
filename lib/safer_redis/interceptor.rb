@@ -3,7 +3,9 @@
 module SaferRedis
   module Interceptor
     def send_command(command, &block)
-      SaferRedis.assess(command) unless SaferRedis.really?
+      unless SaferRedis.really?
+        SaferRedis::Assessor.assess!(SaferRedis::Command.from_array(command))
+      end
       super
     end
   end
