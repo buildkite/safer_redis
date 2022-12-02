@@ -5,8 +5,6 @@ require "redis"
 RSpec.describe SaferRedis::Interceptor do
 
   class FakeRedis
-    prepend SaferRedis::Interceptor
-
     def del(*keys)
       send_command([:del] + keys)
     end
@@ -21,6 +19,8 @@ RSpec.describe SaferRedis::Interceptor do
       :actual
     end
   end
+
+  before { SaferRedis.activate!(klass: FakeRedis) }
 
   let(:redis) { FakeRedis.new }
 

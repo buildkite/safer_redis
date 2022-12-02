@@ -2,15 +2,15 @@
 
 module SaferRedis
   class Danger < Error
-    def initialize(command:, assessment:)
+    def initialize(doc)
       message = <<~MESSAGE
-        The #{command.name} Redis command might be dangerous.
+        The #{doc.name} Redis command might be dangerous.
 
-        #{command.url}
+        #{doc.url}
 
-        ACL categories: #{assessment.categories.join(" ")}
+        ACL categories: #{doc.acl_categories.join(" ")}
 
-        Complexity: #{assessment.complexity}
+        Complexity: #{doc.complexity}
 
         If you're sure this is okay, you can try again within `SaferRedis.really { ... }`
       MESSAGE
