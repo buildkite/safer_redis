@@ -4,6 +4,8 @@ SaferRedis wraps a Redis connection, and warns you before letting through comman
 
 Inspiration is taken from https://github.com/ankane/strong_migrations which provides similar guard-rails for potentially dangerous database migrations.
 
+Currently SaferRedis works with the [`redis` gem](https://rubygems.org/gems/redis) from https://github.com/redis/redis-rb (regardless of which connection adapter is being used, e.g. [`hiredis`](https://rubygems.org/gems/hiredis)) by hooking into the private `#send_command` method which was introduced in v4.6.0. This isn't a stable API, so other interception strategies will be considered and may be added in future.
+
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
@@ -17,7 +19,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 ## Usage
 
 ```ruby
-Redis.prepend(SaferRedis::Interceptor)
+SaferRedis.activate!
 
 redis = Redis.new
 
