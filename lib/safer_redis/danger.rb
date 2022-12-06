@@ -15,6 +15,13 @@ module SaferRedis
         If you're sure this is okay, you can try again within `SaferRedis.really { ... }`
       MESSAGE
 
+      unless doc.suggestion.nil?
+        message = <<~MESSAGE
+          #{message}
+          Suggestion: #{doc.suggestion.description}
+        MESSAGE
+      end
+
       super(message)
     end
   end
