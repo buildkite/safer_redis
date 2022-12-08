@@ -15,7 +15,7 @@ module SaferRedis
         If you're sure this is okay, you can try again within `SaferRedis.really { ... }`
       MESSAGE
 
-      unless doc.suggestion.nil?
+      if doc.suggestion
         message = <<~MESSAGE
           #{message}
           Suggestion: #{doc.suggestion.description}
