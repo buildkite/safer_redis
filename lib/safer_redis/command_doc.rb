@@ -52,6 +52,10 @@ module SaferRedis
       command.fetch("complexity", nil)
     end
 
+    def suggestion
+      Suggestion.for_command(name)
+    end
+
     private
 
     def command
