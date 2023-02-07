@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.1.0] - 2023-01-07
+
+- Allow `@slow` if it's only `O(1)` complexity, e.g. the `SET` (string) command.
+
 ## [1.0.0] - 2022-12-02
 
 - Initial release
