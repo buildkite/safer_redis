@@ -28,7 +28,13 @@ module SaferRedis
   end
 
   def self.assess!(doc)
-    if doc.dangerous? || doc.slow?
+    if doc.dangerous?
+      # Anything tagged @dangerous is… dangerous
+      raise SaferRedis::Danger.new(doc)
+
+    elsif doc.slow? && doc.complexity != "O(1)"
+      # Anything tagged @slow might be dangerous, but we'll let through O(1)
+      # complexity commands e.g. SET
       raise SaferRedis::Danger.new(doc)
     end
   end
