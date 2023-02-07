@@ -41,6 +41,12 @@ RSpec.describe SaferRedis do
         SaferRedis.assess!(SaferRedis::CommandDoc.new("TYPE"))
       }.to_not raise_error
     end
+
+    it "raises no error for SET because despite being @slow it's only O(1)" do
+      expect {
+        SaferRedis.assess!(SaferRedis::CommandDoc.new("SET"))
+      }.to_not raise_error
+    end
   end
 
   it "has a version number" do
