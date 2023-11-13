@@ -5,6 +5,10 @@ require "redis"
 RSpec.describe SaferRedis::Interceptor do
 
   class FakeRedis
+    def initialize(server_config: {})
+      @server_config = server_config
+    end
+
     def set(*keys)
       send_command([:set] + keys)
     end
@@ -17,6 +21,18 @@ RSpec.describe SaferRedis::Interceptor do
       send_command([:type, key])
     end
 
+    def config(subcommand, arg)
+      if subcommand == :get
+        if @server_config.key?(arg)
+          {arg => @server_config[arg]}
+        else
+          {}
+        end
+      else
+        raise "unsupported #config subcommand #{subcommand}"
+      end
+    end
+
     private
 
     def send_command(command, &block)
@@ -26,7 +42,8 @@ RSpec.describe SaferRedis::Interceptor do
 
   before { SaferRedis.activate!(klass: FakeRedis) }
 
-  let(:redis) { FakeRedis.new }
+  let(:redis) { FakeRedis.new(server_config:) }
+  let(:server_config) { {} }
 
   it "lets through a safe command" do
     redis.type("hello")
