@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "SaferRedis warns you before letting through commands that could impact production availability by being marked `@slow` or `@dangerous` in the Redis documentation"
   spec.homepage = "https://github.com/buildkite/safer_redis"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.required_ruby_version = ">= 3.2.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/buildkite/safer_redis"

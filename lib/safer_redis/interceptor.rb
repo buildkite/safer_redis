@@ -4,7 +4,10 @@ module SaferRedis
   module Interceptor
     def send_command(command, &block)
       if SaferRedis.active?
-        SaferRedis.assess!(SaferRedis::CommandDoc.from_command_array(command))
+        SaferRedis::Assessor.assess!(
+          SaferRedis::CommandDoc.from_command_array(command),
+          redis: self,
+        )
       end
 
       super

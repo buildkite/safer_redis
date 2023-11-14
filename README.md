@@ -4,9 +4,16 @@ SaferRedis wraps a Redis connection, and warns you before letting through comman
 
 Inspiration is taken from https://github.com/ankane/strong_migrations which provides similar guard-rails for potentially dangerous database migrations.
 
+## Special cases
+
+Commands tagged as `@slow` but with only O(1) complexity are not considered dangerous. This includes
+e.g. the extremely commonly used `SET` command.
+
+The [`DEL`](https://redis.io/commands/del/) command (`@slow`) is treated as [`UNLINK`](https://redis.io/commands/unlink/) (`@fast`) when the `lazyfree-lazy-user-del` server option is set.
+
 ## Limitations
 
-Currently SaferRedis works with the [`redis` gem](https://rubygems.org/gems/redis) from https://github.com/redis/redis-rb (regardless of which connection adapter is being used, e.g. [`hiredis`](https://rubygems.org/gems/hiredis)) by hooking into the private `#send_command` method which was introduced in v4.6.0. This isn't a stable API, so other interception strategies will be considered and may be added in future. Some Redis connectors/drivers suport middleware, but others don't.
+Currently SaferRedis works with the [`redis` gem](https://rubygems.org/gems/redis) from https://github.com/redis/redis-rb (regardless of which connection adapter is being used, e.g. [`hiredis`](https://rubygems.org/gems/hiredis)) by hooking into the private `#send_command` method which was introduced in v4.6.0. This isn't a stable API, so other interception strategies will be considered and may be added in future. Some Redis connectors/drivers support middleware, but others don't.
 
 Some commands are documented at the subcommand level as multiple words (e.g. `CLIENT LIST`). SaferRedis currently only recognises commands documented at their top-level single word (e.g. `DEL`). Support for multi-word commands will be considered and may be added in future.
 
