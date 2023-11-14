@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [1.2.0] - 2023-11-14
+
+- Allow `DEL` (`@slow`) if `lazyfree-lazy-user-del` server option is enabled.
+
 ## [1.1.0] - 2023-01-07
 
 - Allow `@slow` if it's only `O(1)` complexity, e.g. the `SET` (string) command.
