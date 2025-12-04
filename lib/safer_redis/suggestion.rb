@@ -14,7 +14,23 @@ module SaferRedis
       when "DEL"
         new(command, <<~END)
           Consider using the non-blocking UNLINK command instead to delete the key on a \
-          background thread, or set the lazyfree-lazy-user-del server option
+          background thread, or set the lazyfree-lazy-user-del server option. \
+
+          Note: Redis commands cannot be cancelled once sent.
+        END
+      when "KEYS"
+        new(command, <<~END)
+          KEYS blocks Redis until complete - avoid in production. Use SCAN instead, \
+          which returns results incrementally. \
+
+          Note: Redis commands cannot be cancelled once sent.
+        END
+      when "SCAN", "SSCAN", "HSCAN", "ZSCAN"
+        new(command, <<~END)
+          A single SCAN call is usually enough to verify if keys exist. \
+          If you must loop: use COUNT ≤100, add sleep between iterations. \
+
+          Note: Redis commands cannot be cancelled once sent.
         END
       else
         nil
